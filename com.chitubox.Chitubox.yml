@@ -1,0 +1,46 @@
+app-id: com.chitubox.Chitubox
+runtime: org.kde.Platform
+runtime-version: '5.15'
+sdk: org.kde.Sdk
+command: CHITUBOX
+build-options:
+  no-debuginfo: true
+  no-debuginfo-compression: true
+  strip: false
+finish-args:
+  - "--socket=x11"
+  - "--device=dri"
+  - "--filesystem=home"
+  - "--share=network"
+modules:
+  - name: krb5
+    buildsystem: simple
+    build-commands:
+      - cd src && ./configure --prefix=/app
+      - cd src && make
+      - cd src && make install
+    sources:
+      - type: archive
+        url: https://kerberos.org/dist/krb5/1.19/krb5-1.19.2.tar.gz
+        sha256: 10453fee4e3a8f8ce6129059e5c050b8a65dab1c257df68b99b3112eaa0cdf6a
+
+  - name: chitubox
+    buildsystem: simple
+    build-commands:
+      - mkdir -p /app/bin /app/lib
+      - cp -a CHITUBOX plugins qml qt.conf resource translations /app/bin
+      - cp -a lib/* /app/lib
+        #- cp -a system-libs/* /app/lib
+    sources:
+      - type: archive
+        path: CHITUBOX_V1.9.0.tar.gz
+        sha256: 82ef2f36ee92238010e437b2e39494cee1a9ab0969e9507673a497b7633bf22c
+  - name: desktop
+    buildsystem: simple
+    sources:
+      - type: dir
+        path: desktop
+    build-commands:
+        - install -D com.chitubox.Chitubox.desktop -t /app/share/applications/
+        - install -D com.chitubox.Chitubox.png -t /app/share/icons/hicolor/256x256/apps/
+        - install -D com.chitubox.Chitubox.appdata.xml -t /app/share/metainfo/
