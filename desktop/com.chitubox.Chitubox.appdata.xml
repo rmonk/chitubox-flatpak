@@ -5,7 +5,7 @@
 	<developer_name>Chitu Systems</developer_name>
 	<summary>SLA Printer Slicer</summary>
 	<project_license>Proprietary</project_license>
-	<metadata_license>Proprietary</metadata_license>
+	<metadata_license>MIT</metadata_license>
 	<description>
 	<p>A powerful and easy way to prepare for SLA/DLP/LCD 3D printing</p>
 </description>
